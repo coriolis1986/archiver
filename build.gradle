@@ -1,0 +1,27 @@
+plugins {
+    id 'java'
+}
+
+group 'ru.otus.archiver'
+version '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'com.google.guava:guava:32.0.0-jre'
+
+    compileOnly 'org.projectlombok:lombok:1.18.28'
+    annotationProcessor 'org.projectlombok:lombok:1.18.28'
+}
+
+jar {
+    manifest {
+        attributes "Main-Class": "ru.otus.archiver.Launcher"
+    }
+
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
