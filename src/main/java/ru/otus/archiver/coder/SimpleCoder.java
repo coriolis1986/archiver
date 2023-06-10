@@ -7,6 +7,12 @@ public class SimpleCoder implements Coder {
 
     public byte[] encode(byte[] arr) {
 
+        if (arr.length == 0)
+            return new byte[0];
+
+        if (arr.length == 1)
+            return new byte[] { 1, arr[0] };
+
         final Queue<Byte> queue = new ArrayDeque<>();
         Byte prevByte = null;
         byte count = 0;
@@ -14,7 +20,7 @@ public class SimpleCoder implements Coder {
         for (byte curByte : arr) {
             if ((count == 127) || (prevByte != null && prevByte != curByte)) {
                 queue.add(count);
-                queue.add((byte) prevByte);
+                queue.add(prevByte);
 
                 count = 0;
             }
@@ -24,10 +30,8 @@ public class SimpleCoder implements Coder {
             prevByte = curByte;
         }
 
-        if (prevByte != null) {
-            queue.add(count);
-            queue.add(prevByte);
-        }
+        queue.add(count);
+        queue.add(prevByte);
 
         byte[] result = new byte[queue.size()];
         int i = 0;
@@ -42,7 +46,6 @@ public class SimpleCoder implements Coder {
 
         final Queue<Byte> queue = new ArrayDeque<>();
 
-        System.out.println();
         for (int i = skip; i < arr.length; ) {
             int count = arr[i++];
             byte cur = arr[i++];

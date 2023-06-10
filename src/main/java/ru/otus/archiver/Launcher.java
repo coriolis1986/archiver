@@ -1,6 +1,7 @@
 package ru.otus.archiver;
 
 import lombok.SneakyThrows;
+import ru.otus.archiver.coder.Archiver;
 import ru.otus.archiver.dto.DecodeData;
 
 import java.io.File;

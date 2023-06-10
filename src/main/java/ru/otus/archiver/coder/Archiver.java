@@ -1,8 +1,5 @@
-package ru.otus.archiver;
+package ru.otus.archiver.coder;
 
-import ru.otus.archiver.coder.Coder;
-import ru.otus.archiver.coder.ExtendedCoder;
-import ru.otus.archiver.coder.SimpleCoder;
 import ru.otus.archiver.dto.DecodeData;
 
 import java.nio.file.Path;
@@ -11,16 +8,14 @@ import java.util.Arrays;
 
 public class Archiver {
 
-    private final static String FILENAME_SEPARATOR = "|";
+    private final static char FILENAME_SEPARATOR = '#';
 
     public byte[] encode(String filename, String algo, byte[] bytes) {
         byte[] data = getCoder(algo).encode(bytes);
 
         Path pathLinux = Paths.get(filename);
 
-        System.out.println(pathLinux.getFileName().toString());
-
-        byte[] filenameInBytes = (pathLinux.getFileName().toString() + "|").getBytes();
+        byte[] filenameInBytes = (pathLinux.getFileName().toString() + FILENAME_SEPARATOR).getBytes();
         byte[] merged = new byte[filenameInBytes.length + data.length];
 
         System.arraycopy(filenameInBytes, 0, merged, 0, filenameInBytes.length);
@@ -32,10 +27,9 @@ public class Archiver {
     public DecodeData decode(String algo, byte[] bytes) {
         int i = 0;
 
-        while (true) {
-            if ((char) bytes[++i] == FILENAME_SEPARATOR.charAt(0))
+        while (true)
+            if ((char) bytes[++i] == FILENAME_SEPARATOR)
                 break;
-        }
 
         String fileName = new String(Arrays.copyOfRange(bytes, 0, i));
         byte[] data = getCoder(algo).decode(bytes, i + 1);
