@@ -12,3 +12,7 @@
 - архивация: java -jar -Dmode=encode -Dfile=/opt/X11/etc/X11/dummy.conf -jar ./build/libs/archiver-1.0.jar
 - распаковка: java -jar -Dmode=decode -Dfile=./dummy.conf.archive -jar ./build/libs/archiver-1.0.jar
 
+Запуск (пример для расширенного алгоритма):
+- архивация: java -jar -Dmode=extended -Dfile=/opt/X11/etc/X11/dummy.conf -jar ./build/libs/archiver-1.0.jar
+- распаковка: java -jar -Dmode=extended -Dfile=./dummy.conf.archive -jar ./build/libs/archiver-1.0.jar
+
